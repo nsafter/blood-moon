@@ -33,9 +33,15 @@ const mat = new THREE.MeshStandardMaterial({
   map: moonTexture,
 });
 
+const backgroundScene = new THREE.TextureLoader().load("space.jpg");
+scene.background = backgroundScene;
+
 const sphere = new THREE.Mesh(geo, mat);
 object.add(sphere);
 scene.add(object);
+
+const ambientlight = new THREE.AmbientLight(0x46070700);
+scene.add(ambientlight);
 
 const pointlight = new THREE.PointLight(0xfa71c1c);
 const directionlight = new THREE.DirectionalLight(0xa71c1c);
@@ -59,7 +65,9 @@ function animate() {
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
   camera.position.x += 0.05;
-  camera.position.z -= 0.015;
+  camera.position.z -= 0.02;
+  pointlight.rotation.z += 0.015;
+  directionlight.rotation.z += 0.015;
   sphere.rotateY(0.011);
   // directionlight.position.x -= 0.05;
   // directionlight.position.y += 0.01;
